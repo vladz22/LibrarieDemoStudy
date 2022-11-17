@@ -10,5 +10,6 @@ namespace LibrarieDemo.Data
         {
         }
         public DbSet<Categorie> Categoriile { get; set; }//crearea tabelelor din baza de date
+        public DbSet<Produs> Produsele { get; set; }//crearea tabelelor din baza de date
     }
 }
