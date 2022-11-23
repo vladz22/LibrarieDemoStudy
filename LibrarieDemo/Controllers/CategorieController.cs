@@ -17,5 +17,21 @@ namespace LibrarieDemo.Controllers
             IEnumerable<Categorie> CategorieLista=_db.Categoriile;
             return View(CategorieLista);
         }
+        //Get
+        public IActionResult Creare()
+        {
+            return View();
+        }
+        //Post
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Creare(Categorie obiect)
+        {
+            _db.Categoriile.Add(obiect);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
     }
 }

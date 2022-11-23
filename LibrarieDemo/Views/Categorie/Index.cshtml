@@ -1,3 +1,35 @@
 ﻿@model IEnumerable<Categorie>
 
-<h1>Index Categorie</h1>
+<h1>Lista Categorie</h1>
+
+
+<div class="container">
+    <div class="row">
+        <div class="d-flex flex-row-reverse">
+            <a class="btn btn-outline-dark" asp-controller="Categorie" asp-action="Creare">Creare categorie noua <i class="bi bi-plus-square fs-4"></i></a>
+        </div>
+    </div>
+
+<table class="table table-hover">
+    <tr>
+        <th>
+          Id
+        </th>
+        <th>
+            Nume
+        </th>
+        
+    </tr>
+    <tr>
+        @foreach(var obiect in Model)
+        {
+        <td>
+          @obiect.Id
+      </td>
+      <td>
+          @obiect.Nume
+      </td>
+        }
+        </tr>
+</table>
+</div>
