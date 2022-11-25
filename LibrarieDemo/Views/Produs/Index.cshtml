@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Produs>
+
+<h1>Lista Categorie</h1>
+
+
+<div class="container">
+    <div class="row">
+        <div class="d-flex flex-row-reverse">
+            <a class="btn btn-outline-dark" asp-controller="Produs" asp-action="Creare">Creare produs nou <i class="bi bi-plus-square fs-4"></i></a>
+        </div>
+    </div>
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>
+          Id
+        </th>
+        <th>
+            Nume
+        </th>
+         <th>
+            Autor
+        </th>
+         <th>
+            Cod
+        </th>
+         <th>
+            Cantitate
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach(var obiect in Model)
+        {
+      <tr>
+        <td width="30%">
+          @obiect.Id
+      </td>
+      <td width="30%">
+          @obiect.Nume
+      </td>
+      <td width="30%">
+          @obiect.Autor
+      </td>
+      <td width="30%">
+          @obiect.Cod
+      </td>
+      <td width="30%">
+          @obiect.Cantitate
+      </td>
+      <td width="15%">
+           <a class="btn btn-outline-dark" asp-controller="Produs" asp-action="Editare" asp-route-id="@obiect.Id">Editeaza produs<i class="bi bi-pencil-fill"></i></a>
+      </td>
+      <td width="15%">
+           <a class="btn btn-outline-danger" asp-controller="Produs" asp-action="Stergere" asp-route-id="@obiect.Id">Sterge produs<i class="bi bi-pencil-fill"></i></a>
+      </td>
+       </tr>
+        }
+        </tbody>
+</table>
+</div>

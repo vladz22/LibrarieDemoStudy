@@ -4,6 +4,7 @@ using LibrarieDemo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibrarieDemo.Migrations
 {
     [DbContext(typeof(DbContextObiectConex))]
-    partial class DbContextObiectConexModelSnapshot : ModelSnapshot
+    [Migration("20221125145935_AdaugareProdusInDB")]
+    partial class AdaugareProdusInDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
