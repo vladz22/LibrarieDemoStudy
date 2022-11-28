@@ -1,6 +1,7 @@
 ﻿using LibrarieDemo.Data;
 using LibrarieDemo.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LibrarieDemo.Controllers
 {
@@ -21,6 +22,13 @@ namespace LibrarieDemo.Controllers
         //Get Creare
         public IActionResult Creare()
         {
+            IEnumerable<SelectListItem> CategorieLista = _db.Categoriile.Select(
+                u=>new SelectListItem
+                {
+                    Text= u.Nume,
+                    Value=u.Id.ToString()
+                });
+            ViewData["CategorieLista"] = CategorieLista;
             return View();
         }
         //Post Creare

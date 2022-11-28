@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LibrarieDemo.Models
 {
@@ -19,6 +20,12 @@ namespace LibrarieDemo.Models
         [DisplayName("Imaginea")]
         [ValidateNever]
         public string ImagineUrl { get; set; }
+        [DisplayName("Categoria produsului")]
+        [Required(ErrorMessage = "Categoria produsului este obligatoriu")]
+        public int CategorieId { get; set; }//cheia straina
+        [ForeignKey("CategorieId")]
+        [ValidateNever]
+        public Categorie CategorieObiect { get; set; }
 
     }
 }
