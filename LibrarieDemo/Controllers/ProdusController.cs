@@ -9,9 +9,11 @@ namespace LibrarieDemo.Controllers
     {
 
         private readonly DbContextObiectConex _db;
-        public ProdusController(DbContextObiectConex db)
+        private readonly IWebHostEnvironment _hostEnvironment;//e deja adaugat ca dependency injection in asp.net trebuie doar sa il extrag
+        public ProdusController(DbContextObiectConex db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
         }
 
         public IActionResult Index()
@@ -34,10 +36,28 @@ namespace LibrarieDemo.Controllers
         //Post Creare
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Creare(Produs obiect)
+        public IActionResult Creare(Produs obiect,IFormFile? fisier)
         {
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                if(fisier!=null)
+                {
+                    //upload
+                    string fisierNume=Guid.NewGuid().ToString();//dam rename la fiecare fisier uploadat sa nu se incurce 2 fisiere similare
+                    var uploadat=Path.Combine(wwwRootPath,@"imagini\produse");
+                    var extensie = Path.GetExtension(fisier.FileName);
+                    //copiem fisierul uploadat in folder
+                    using(var fisierStreams = new FileStream(Path.Combine(uploadat, fisierNume + extensie),FileMode.Create))
+                    {
+                        fisier.CopyTo(fisierStreams);
+                    }
+                    obiect.ImagineUrl = @"\imagini\produse\" + fisierNume + extensie;
+
+                }
+
+
+
                 _db.Produsele.Add(obiect);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
