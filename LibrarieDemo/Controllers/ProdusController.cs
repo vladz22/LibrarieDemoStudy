@@ -75,6 +75,14 @@ namespace LibrarieDemo.Controllers
             }
             else
             {
+                IEnumerable<SelectListItem> CategorieLista = _db.Categoriile.Select(
+                u => new SelectListItem
+                {
+                    Text = u.Nume,
+                    Value = u.Id.ToString()
+                });
+                ViewData["CategorieLista"] = CategorieLista;
+               
                 var produsDinDB = _db.Produsele.FirstOrDefault(u => u.Id == id);
                 return View(produsDinDB);
             }
@@ -83,15 +91,45 @@ namespace LibrarieDemo.Controllers
         //Post Editare
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Editare(Produs obiect)
+        public IActionResult Editare(Produs obiect,IFormFile? fisier)
         {
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                if (fisier != null)
+                {
+                    //upload
+                    string fisierNume = Guid.NewGuid().ToString();//dam rename la fiecare fisier uploadat sa nu se incurce 2 fisiere similare
+                    var uploadat = Path.Combine(wwwRootPath, @"imagini\produse");
+                    var extensie = Path.GetExtension(fisier.FileName);
+                    //stergem fisierul in caz de update
+                    if(obiect.ImagineUrl!=null)
+                    {
+                        var vecheaPozaPath = Path.Combine(wwwRootPath, obiect.ImagineUrl.TrimStart('\\'));//caracterul "\" este un escape caracter si trebuie sa scriem de 2 ori
+                        if(System.IO.File.Exists(vecheaPozaPath))
+                        {
+                            System.IO.File.Delete(vecheaPozaPath);
+                        }
+
+                    }
+                    //copiem fisierul uploadat in folder
+                    using (var fisierStreams = new FileStream(Path.Combine(uploadat, fisierNume + extensie), FileMode.Create))
+                    {
+                        fisier.CopyTo(fisierStreams);
+                    }
+                    obiect.ImagineUrl = @"\imagini\produse\" + fisierNume + extensie;
+
+                }
+
+
+
+
+
                 _db.Produsele.Update(obiect);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
-
             }
+            
             return View();
         }
 

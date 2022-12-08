@@ -2,6 +2,8 @@
 <div class="container">
     <h1 class="text-center">Editeaza un produs</h1>
     <form method="post" enctype="multipart/form-data">@*enctype pentru upload*@
+        <input asp-for="Id" hidden/>
+        <input  asp-for="ImagineUrl" hidden/>
         <div class="d-flex justify-content-center">
             <div class="col-7">
                 <div class="form-group row">
@@ -41,6 +43,15 @@
                     <div class="col-8 pt-2">
                         <input asp-for="Cod" class="form-control" />
                         <span asp-validation-for="Cod" class="text-danger"></span>
+                    </div>
+                    <div class="col-4 pt-2">
+                        <label asp-for="CategorieId"></label>
+                    </div>
+                    <div class="col-8 pt-2">
+                        <select asp-for="CategorieId" asp-items="@(ViewData["CategorieLista"] as IEnumerable<SelectListItem>)" class="form-select">
+                        <option disabled selected>--Selecteaza Categoria--</option>
+                    </select>
+                    <span asp-validation-for="CategorieId" class="text-danger"></span>
                     </div>
                     <div class="col-4 pt-2">
                         <label asp-for="ImagineUrl"></label>
